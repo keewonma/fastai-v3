@@ -77,9 +77,6 @@ async def analyze(request):
              <p>Prediction: <b>%s</b></p>
              <p>Confidence: %s</p>
            </body>
-        <figure class="figure">
-          <img src="data:image/png;base64, %s" class="figure-img img-thumbnail input-image">
-        </figure>
         </html>
     """ %(pred_class.upper(), pred_probs, img_data))
 

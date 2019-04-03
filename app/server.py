@@ -64,17 +64,12 @@ async def analyze(request):
     img = open_image(BytesIO(img_bytes))
     prediction = learn.predict(img)[0]
     outputs = learn.predict(img)[2]
-    return JSONResponse({'result': [
-                                         {
-                                             'prediction'   : str(prediction), 
-                                             'test'         : str(test),
-                                             'probabilities': list(zip(classes, (outputs *100).tolist()                                                                                
-                                                                      )
-                                                                  )
-                                         }
-                                   [
-                         }
-                        )
+    data = {
+             'prediction'   : str(prediction), 
+              'test'         : str(test),
+              'probabilities': list(zip(classes, (outputs *100).tolist()))
+           }
+    return JSONResponse(data)
 
 if __name__ == '__main__':
     if 'serve' in sys.argv: uvicorn.run(app=app, host='0.0.0.0', port=5042)

@@ -69,7 +69,6 @@ async def analyze(request):
             key=lambda p: p[1],
             reverse=True
         )
-    img_data = encode(img)
     return HTMLResponse(
         """
         <html>

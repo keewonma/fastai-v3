@@ -65,9 +65,11 @@ async def analyze(request):
     prediction = learn.predict(img)[0]
     outputs = learn.predict(img)[2]
     data = {
-             'prediction'   : str(prediction), 
-              'test'         : str(test),
-              'probabilities': list(zip(classes, (outputs *100).tolist()))
+             [
+                 'prediction'   : str(prediction), 
+                 'test'         : str(test),
+                 'probabilities': list(zip(classes, (outputs *100).tolist()))
+             ]
            }
     return JSONResponse(data)
 

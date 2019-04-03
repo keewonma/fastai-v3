@@ -77,7 +77,7 @@ async def analyze(request):
              <p>Confidence: %s</p>
            </body>
         </html>
-    """ %(pred_class.upper(), pred_probs, img_data))
+    """ %(pred_class, pred_probs))
 
 if __name__ == '__main__':
     if 'serve' in sys.argv: uvicorn.run(app=app, host='0.0.0.0', port=5042)

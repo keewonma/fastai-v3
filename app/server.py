@@ -68,10 +68,13 @@ async def analyze(request):
                                          {
                                              'prediction'   : str(prediction), 
                                              'test'         : str(test),
-                                             'probabilities': list(zip(classes, ((outputs *100).tolist())))
+                                             'probabilities': list(zip(classes, (outputs *100).tolist()                                                                                
+                                                                      )
+                                                                  )
                                          }
-                                     [
-                         })
+                                   [
+                         }
+                        )
 
 if __name__ == '__main__':
     if 'serve' in sys.argv: uvicorn.run(app=app, host='0.0.0.0', port=5042)

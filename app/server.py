@@ -62,7 +62,9 @@ async def analyze(request):
     data = await request.form()
     img_bytes = await (data['file'].read())
     img = open_image(BytesIO(img_bytes))
-    pred_class,pred_idx,outputs = learn.predict(img)
+    prediction = learn.predict(img)[0]
+    outputs = learn.predict(img)[2]
+    
     formatted_outputs = [f'{value*100:0.1f}%' for value in outputs]
     pred_probs = sorted(
                         zip(classes, map(str, formatted_outputs)),
@@ -73,8 +75,8 @@ async def analyze(request):
     #probabilities1 = {'Probability Top 1': str(pred_probs[0])}
     #probabilities2 = {'Probability Top 2': str(pred_probs[1])}
     #probabilities3 = {'Probability Top 3': str(pred_probs[2])}
-    data = "%s/nProbability Top 1: %s/nProbability Top 2:%s/n Probability Top 3: %s"%(pred_class, pred_probs[0],pred_probs[1], pred_probs[2])
+    data = "%s/nProbability Top 1: %s/nProbability Top 2:%s/n Probability Top 3: %s"%(str(prediction), str(pred_probs[0]),str(pred_probs[1]), str(pred_probs[2]))
 
-    return JSONResponse({'Results': str(pred_class)})
+    return JSONResponse({'result': str(prediction)})
 if __name__ == '__main__':
     if 'serve' in sys.argv: uvicorn.run(app=app, host='0.0.0.0', port=5042)

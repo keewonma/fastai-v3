@@ -70,8 +70,7 @@ async def analyze(request):
                         reverse=True
                        )[:3]
     return JSONResponse({
-        "predictions": sorted(
-            zip(classes, map(float, outputs)),
+        "predictions": pred_probs,
             key=lambda p: p[1],
             reverse=True
         )

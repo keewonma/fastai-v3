@@ -69,9 +69,6 @@ async def analyze(request):
                             key=lambda p: p[1],
                             reverse=True
                        )[:3]
-    data = f"Prediction: {pred_class},
-            Probability Top 1: {} years old.".format(shepherd, age)
-
     data = {'Prediction': pred_class}
     probabilities1 = {'Probability Top 1': str(pred_probs[0])}
     probabilities2 = {'Probability Top 2': str(pred_probs[1])}

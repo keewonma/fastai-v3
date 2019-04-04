@@ -65,10 +65,18 @@ async def analyze(request):
     pred_class,pred_idx,outputs = learn.predict(img)
     formatted_outputs = [f'{value*100:0.1f}%' for value in outputs]
     pred_probs = sorted(
-                        zip(classes, formatted_outputs),
-                        key=lambda p: p[1],
-                        reverse=True
+                        zip(classes, map(str, formatted_outputs),
+                            key=lambda p: p[1],
+                            reverse=True
                        )[:3]
-    return JSONResponse({"predictions": pred_probs})
+    return HTMLResponse(
+        """
+        <html>
+           <body>
+             <p>Prediction: <b>%s</b></p>
+             <p>Confidence: %s</p>
+           </body>
+        </html>
+    """ %(pred_class, pred_probs))
 if __name__ == '__main__':
     if 'serve' in sys.argv: uvicorn.run(app=app, host='0.0.0.0', port=5042)

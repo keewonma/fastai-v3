@@ -57,7 +57,7 @@ def index(request):
     html = path/'view'/'index.html'
     return HTMLResponse(html.open().read())
 
-@app.route('/analyze', methods=['POST'])
+@app.route('/analyze', methods=['GET'])
 async def analyze(request):
     data = await request.form()
     img_bytes = await (data['file'].read())
@@ -79,7 +79,9 @@ async def analyze(request):
         </html>
     """ %(pred_class, pred_probs))
 @app.route('/analyze')
+
 def redirect_to_homepage(request):
     return RedirectResponse("/")
+
 if __name__ == '__main__':
     if 'serve' in sys.argv: uvicorn.run(app=app, host='0.0.0.0', port=5042)

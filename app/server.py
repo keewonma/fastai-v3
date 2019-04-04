@@ -65,7 +65,7 @@ async def analyze(request):
     pred_class,pred_idx,outputs = learn.predict(img)
     formatted_outputs = [f'{value*100:0.1f}%' for value in outputs]
     pred_probs = sorted(
-                        zip(classes, map(str, formatted_outputs),
+                        zip(classes, map(str, formatted_outputs)),
                             key=lambda p: p[1],
                             reverse=True
                        )[:3]

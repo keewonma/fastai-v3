@@ -57,7 +57,7 @@ def index(request):
     html = path/'view'/'index.html'
     return HTMLResponse(html.open().read())
 
-@app.route('/analyze', methods=['GET'])
+@app.route('/analyze', methods=['POST'])
 async def analyze(request):
     data = await request.form()
     img_bytes = await (data['file'].read())
@@ -69,19 +69,11 @@ async def analyze(request):
                             key=lambda p: p[1],
                             reverse=True
                        )[:3]
-    return HTMLResponse(
-        """
-        <html>
-           <body>
-             <p>Prediction: <b>%s</b></p>
-             <p>Confidence: %s</p>
-           </body>
-        </html>
-    """ %(pred_class, pred_probs))
-@app.route('/analyze')
-
-def redirect_to_homepage(request):
-    return RedirectResponse("/")
-
+    data = {'Prediction': pred_class,
+            'Probability Top 1': pred_probs[0],
+            'Probability Top 2': pred_probs[1],
+            'Probability Top 3': pred_probs[2],
+              }
+    return UJSONResponse(data)
 if __name__ == '__main__':
     if 'serve' in sys.argv: uvicorn.run(app=app, host='0.0.0.0', port=5042)

@@ -75,6 +75,6 @@ async def analyze(request):
     #probabilities3 = {'Probability Top 3': str(pred_probs[2])}
     data = "Prediction: %s/nProbability Top 1: %s/nProbability Top 2:%s/n Probability Top 3: %s"%(pred_class, pred_probs[0],pred_probs[1], pred_probs[2])
 
-    return PlainTextResponse(data)
+    return JSONResponse('result':pred_class)
 if __name__ == '__main__':
     if 'serve' in sys.argv: uvicorn.run(app=app, host='0.0.0.0', port=5042)

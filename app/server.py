@@ -74,10 +74,10 @@ async def analyze(request):
         <html>
            <body>
              <p>Prediction: <b>%s</b></p>
-             <p>Confidence: %s</p>
+             
            </body>
         </html>
     """ %(pred_class, pred_probs))
-
+# <p>Confidence: %s</p>
 if __name__ == '__main__':
     if 'serve' in sys.argv: uvicorn.run(app=app, host='0.0.0.0', port=5042)

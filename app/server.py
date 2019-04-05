@@ -71,12 +71,7 @@ async def analyze(request):
                             key=lambda p: p[1],
                             reverse=True
                        )[:3]
-    #data = {'Prediction': str(prediction)}
-    #probabilities1 = {'Probability Top 1': str(pred_probs[0])}
-    #probabilities2 = {'Probability Top 2': str(pred_probs[1])}
-    #probabilities3 = {'Probability Top 3': str(pred_probs[2])}
-    data = "Probability Top 1:%s | Probability Top 2:%s | Probability Top 3:%s"%(str(pred_probs[0]),str(pred_probs[1]), str(pred_probs[2]))
-
+    data = "%s | Probability Top 1:%s | Probability Top 2:%s | Probability Top 3:%s"%(str(prediction),str(pred_probs[0]),str(pred_probs[1]),str(pred_probs[2]))
     return JSONResponse({'RESULTS': str(data)})
 if __name__ == '__main__':
     if 'serve' in sys.argv: uvicorn.run(app=app, host='0.0.0.0', port=5042)
